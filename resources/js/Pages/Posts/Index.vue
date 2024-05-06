@@ -5,7 +5,9 @@
                 <li v-for="post in posts.data" :key="post.id">
                     <Link :href="route('posts.show', post.id)" class="block group px-2 py-4">
                         <span class="font-bold text-lg group-hover:text-indigo-500">{{ post.title }}</span>
-                        <span class="block pt-1 text-sm text-gray-600">{{ formattedDate(post) }}前 by {{ post.user.name }}</span>
+                        <span class="block pt-1 text-sm text-gray-600">{{ formattedDate(post) }}前 by {{
+                                post.user.name
+                            }}</span>
                     </Link>
                 </li>
             </ul>
@@ -18,14 +20,11 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
 import Pagination from "@/Components/Pagination.vue";
 import {Link} from "@inertiajs/vue3";
-import {formatDistance, parseISO} from "date-fns";
-import {ja} from "date-fns/locale";
+import {relativeDate} from "@/Utilities/date.js";
 
 defineProps(['posts']);
 
-const formattedDate = (post) => {
-    return formatDistance(parseISO(post.created_at), new Date(), {locale: ja})
-};
+const formattedDate = (post) => relativeDate(post.created_at);
 
 </script>
 
