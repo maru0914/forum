@@ -29,6 +29,8 @@ class CommentController extends Controller
      */
     public function store(Request $request, Post $post)
     {
+        ray($request);
+        ray($request->user());
         $data = $request->validate(['body' => ['required', 'string', 'max:2500']]);
 
         Comment::create([
