@@ -48,7 +48,7 @@ class CommentPolicy
             return false;
         }
 
-        return  $comment->created_at->isAfter(now()->subHour());
+        return $comment->created_at->isAfter(now()->subHour());
     }
 
     /**
