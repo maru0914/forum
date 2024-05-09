@@ -2,7 +2,6 @@
 
 use App\Models\Post;
 use App\Models\User;
-
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\post;
 
@@ -33,7 +32,7 @@ it('redirects to the post show page', function () {
 
     actingAs($user)
         ->post(route('posts.store'), $this->validData)
-        ->assertRedirect(route('posts.show', Post::latest('id')->first()));
+        ->assertRedirect(Post::latest('id')->first()->showRoute());
 });
 
 it('requires valid data', function ($badData, array|string $errors) {
