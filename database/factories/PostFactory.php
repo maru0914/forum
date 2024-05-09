@@ -32,7 +32,6 @@ class PostFactory extends Factory
     public function withFixture(): static
     {
         $posts = static::getFixtures()
-            ->map(fn (SplFileInfo $fileInfo) => $fileInfo->getContents())
             ->map(fn (string $contents) => str($contents)->explode("\n", 2))
             ->map(fn (Collection $parts) => [
                 'title' => str($parts[0])->trim()->after('# '),

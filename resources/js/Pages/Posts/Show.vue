@@ -4,8 +4,7 @@
             <h1 class="text-2xl font-bold">{{ post.title }}</h1>
             <span class="block mt-1 text-sm text-gray-600">{{ formattedDate }}前 by {{ post.user.name }}</span>
 
-            <article class="mt-6">
-                <pre class="whitespace-pre-wrap font-sans">{{ post.body }}</pre>
+            <article class="mt-6 prose prise-sm max-w-none" v-html="post.html">
             </article>
 
             <div class="mt-12">
