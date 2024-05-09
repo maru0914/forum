@@ -59,7 +59,7 @@ class PostController extends Controller
         if (! Str::contains($post->showRoute(), $request->path())) {
             return redirect($post->showRoute($request->query()), status: 301);
         }
-        
+         
         $post->load('user');
 
         return inertia('Posts/Show', [
