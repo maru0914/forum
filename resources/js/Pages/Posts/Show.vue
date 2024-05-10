@@ -14,11 +14,13 @@
                       @submit.prevent="() => commentIdBeingEdited ? updateComment() :addComment()" class="mt-4">
                     <div>
                         <InputLabel for="body" class="sr-only">Comment</InputLabel>
-                        <TextArea id="body"
-                                  ref="commentTextAreaRef"
-                                  v-model="commentForm.body"
-                                  rows="4"
-                                  placeholder="あなたの感想をコメントしてください"/>
+                        <MarkdownEditor
+                            id="body"
+                            ref="commentTextAreaRef"
+                            v-model="commentForm.body"
+                            placeholder="あなたの感想をコメントしてください"
+                            editorClass="min-h-[160px]"
+                        />
                         <InputError :message="commentForm.errors.body" class="mt-1"/>
                     </div>
 
@@ -50,10 +52,10 @@ import Comment from "@/Components/Comment.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {router, useForm} from "@inertiajs/vue3";
-import TextArea from "@/Components/TextArea.vue";
 import InputError from "@/Components/InputError.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useConfirm} from "@/Utilities/Composables/useConfirm.js";
+import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 
 const props = defineProps(['post', 'comments']);
 
