@@ -1,7 +1,7 @@
 <template>
     <AppLayout title="投稿の作成">
         <Container>
-            <h1 class="text-2xl font-bold">投稿の作成</h1>
+            <PageHeading>投稿の作成</PageHeading>
 
             <form @submit.prevent="createPost" class="mt-6">
                 <div>
@@ -44,6 +44,7 @@ import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 import {isInProduction} from "@/Utilities/environment.js";
+import PageHeading from "@/Components/PageHeading.vue";
 
 const form = useForm({
     title: '',
