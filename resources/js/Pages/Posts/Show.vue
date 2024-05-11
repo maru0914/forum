@@ -20,7 +20,7 @@
                             ref="commentTextAreaRef"
                             v-model="commentForm.body"
                             placeholder="あなたの感想をコメントしてください"
-                            editorClass="min-h-[160px]"
+                            editorClass="!min-h-[160px]"
                         />
                         <InputError :message="commentForm.errors.body" class="mt-1"/>
                     </div>
@@ -37,7 +37,7 @@
                     </li>
                 </ul>
 
-                <Pagination :meta="comments.meta"/>
+                <Pagination :meta="comments.meta" :only="['comments']"/>
             </div>
         </Container>
     </AppLayout>
@@ -112,7 +112,12 @@ const deleteComment = async (commentId) => {
     }
 
     router.delete(
-        route('comments.destroy', {comment: commentId, page: props.comments.meta.current_page}),
+        route('comments.destroy', {
+            comment: commentId,
+            page: props.comments.data.length > 1
+                ? props.comments.meta.current_page
+                : Math.max(props.comments.meta.current_page - 1, 1)
+        }),
         {
             preserveScroll: true
         });

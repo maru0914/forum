@@ -64,8 +64,9 @@ const props = defineProps({
     }
 });
 
-let previousPageUrl = computed(() => props.meta.links[0].url)
-let nextPageUrl = computed(() => [...props.meta.links].reverse()[0].url)
+const only = computed(() => props.only.length === 0 ? [] : [...props.only, 'jetstream']);
+const previousPageUrl = computed(() => props.meta.links[0].url)
+const nextPageUrl = computed(() => [...props.meta.links].reverse()[0].url)
 
 
 </script>
