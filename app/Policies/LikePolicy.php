@@ -9,9 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class LikePolicy
 {
-    /**
-     * Determine whether the user can create models.
-     */
     public function create(User $user, Model $likeable): bool
     {
         if (! in_array($likeable::class, [Post::class, Comment::class])) {
@@ -19,5 +16,14 @@ class LikePolicy
         }
 
         return $likeable->likes()->whereBelongsTo($user)->doesntExist();
+    }
+
+    public function delete(User $user, Model $likeable)
+    {
+        if (! in_array($likeable::class, [Post::class, Comment::class])) {
+            return false;
+        }
+
+        return $likeable->likes()->whereBelongsTo($user)->exists();
     }
 }

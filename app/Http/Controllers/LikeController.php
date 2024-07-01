@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
 use App\Models\Like;
-use App\Models\Post;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -12,22 +10,6 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -45,38 +27,20 @@ class LikeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Like $like)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Like $like)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Like $like)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Like $like)
+    public function destroy(Request $request, string $type, string $id)
     {
-        //
+        $likeable = $this->findLikeable($type, $id);
+        $this->authorize('delete', [Like::class, $likeable]);
+
+        $likeable->likes()->whereBelongsTo($request->user())->delete();
+        $likeable->decrement('likes_count');
+
+        return back();
     }
 
-    protected function findLikeable(string $type, string $id): Post|Comment
+    protected function findLikeable(string $type, string $id): Model
     {
         /** @var class-string<Model>|null $modelName */
         $modelName = Relation::getMorphedModel($type);
